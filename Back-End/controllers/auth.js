@@ -6,7 +6,7 @@ const login = async(req, res) => {
 
     try{
 
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email: req.body.email });
         if(!user){
             return res.status(404).json({
                 ok: false,
@@ -15,7 +15,19 @@ const login = async(req, res) => {
         }
 
         //verificar passwrord
+        const validPassword = bcrypt.compareSync(req.body.password, user.password);
+        if(!validPassword){
+            return res.status(400).json({
+                ok: false,
+                message: "Password not valid"
+            });
+        };
 
+        //generar jwt
+        res.json({
+            ok: true,
+            message: 'User logged'
+        })
 
     } catch(err){
         console.log(err);

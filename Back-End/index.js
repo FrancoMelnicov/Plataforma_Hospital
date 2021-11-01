@@ -24,6 +24,7 @@ const port = env.PORT;
 const api_route = "/api-hospital";
 const user_route = "/users";
 app.use(api_route + user_route, require('./routes/users'));
+app.use(api_route + user_route, require('./routes/auth'));
 
 app.listen( port, () => {
     console.log("Server running on port: " + port);

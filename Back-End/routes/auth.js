@@ -6,6 +6,11 @@ const router = Router();
 
 router.post(
     '/login',
+    [
+        check('email', 'Email is required').not().isEmpty().isEmail(),
+        check('password', 'Email is required').not().isEmpty(),
+        validateAttribute
+    ],
     login
     )
 

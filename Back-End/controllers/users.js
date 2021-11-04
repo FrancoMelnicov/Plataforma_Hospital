@@ -1,6 +1,7 @@
 'use strict'
 
 const { json } = require('express');
+const { generateJWT } = require('../helpers/jwt');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
@@ -10,7 +11,8 @@ const getUsers = async (req, res) => {
 
     res.json({
         ok: true,
-        users
+        users,
+        uid: req.uid
     })
 }
 
@@ -61,12 +63,15 @@ const createUser = async (req, res) => {
         const varAlt = bcrypt.genSaltSync();
         user.password = bcrypt.hashSync(password, varAlt);
 
-        //
-
         await user.save();
+
+        //generate token
+        const token = await generateJWT(user.id)
+        
         res.json({
             ok: true,
-            user
+            user,
+            token
         })
 
     } catch(err) {

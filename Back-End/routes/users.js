@@ -6,9 +6,10 @@ const { getUsers, createUser, getUser, updateUser, deleteUser } = require('../co
 const { check } = require('express-validator');
 const router = Router();
 const { validateAttribute } = require('../middlewares/validate-request');
+const { validateJWT } = require('../middlewares/validate-jwt')
 
 //GET
-router.get('/get-list-users', getUsers);
+router.get('/get-list-users', validateJWT, getUsers);
 router.get('/get-user/:user_id', getUser);
 
 //POST

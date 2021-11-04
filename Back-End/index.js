@@ -26,6 +26,13 @@ const user_route = "/users";
 app.use(api_route + user_route, require('./routes/users'));
 app.use(api_route + user_route, require('./routes/auth'));
 
+app.get(
+    "/",
+    (req, res) =>{
+        res.send("Welcolme to Api_Hostipal")
+    }
+)
+
 app.listen( port, () => {
     console.log("Server running on port: " + port);
 })

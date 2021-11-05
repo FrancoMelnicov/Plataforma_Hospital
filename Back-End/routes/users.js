@@ -10,12 +10,13 @@ const { validateJWT } = require('../middlewares/validate-jwt')
 
 //GET
 router.get('/get-list-users', validateJWT, getUsers);
-router.get('/get-user/:user_id', getUser);
+router.get('/get-user/:user_id', validateJWT, getUser);
 
 //POST
 router.post(
     '/new-user', 
     [
+        validateJWT,
         //validamos que estos campos cumplan con los parametros establecidos y en caso de no este envía un error a la request
         check('name', 'Name is empty').not().isEmpty(),
         check('password', 'Password is empty').not().isEmpty(),
@@ -29,6 +30,7 @@ router.post(
 router.put(
     '/edit-user/:user_id',
     [
+        validateJWT,
         //validamos que estos campos cumplan con los parametros establecidos y en caso de no este envía un error a la request
         check('name', 'Name is required').not().isEmpty(),
         check('email', 'Email is required').not().isEmpty(),
@@ -42,6 +44,7 @@ router.put(
 router.delete(
     '/delete-user/:user_id',
     //[validateAttribute],
+    validateJWT,
     deleteUser
 )
 

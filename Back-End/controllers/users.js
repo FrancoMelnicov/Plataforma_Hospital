@@ -9,7 +9,7 @@ const getUsers = async (req, res) => {
 
     const users = await User.find({}, 'name email role google');
 
-    res.json({
+    return res.json({
         ok: true,
         users,
         uid: req.uid
@@ -19,13 +19,15 @@ const getUsers = async (req, res) => {
 const getUser = async (req, res) => {
 
     try {
-        const user = await User.findById(req.params.user_id, 'name email role google')
+        const user = await User.findById(req.params.user_id, 'name email role google');
+
         if(user){
             return res.status(200).json({
                 ok: true,
                 user
             })
         } else {
+
             return res.status(404).json({
                 ok: false,
                 message: "User not found"
@@ -33,6 +35,7 @@ const getUser = async (req, res) => {
         }
 
     } catch(err){
+
         console.log(err);
         return res.status(500).json({
             ok: false,
@@ -77,7 +80,7 @@ const createUser = async (req, res) => {
     } catch(err) {
 
         console.log(err);
-        res.status(500).json({
+        return res.status(500).json({
             ok: false,
             message: "Error to save user"
         })
@@ -119,7 +122,7 @@ const updateUser = async (req, res) => {
 
     } catch (err) {
         console.log(err);
-        res.status(500).json({
+        return res.status(500).json({
             ok: false,
             message: "Error to edit user"
         })
@@ -131,26 +134,27 @@ const deleteUser = async (req, res) => {
     try{
         const user = await User.findById(req.params.user_id);
         if(!user){
-            res.status(404).json({
+            return res.status(404).json({
                 ok: false,
                 message: 'User not found'
             })
         }
 
         await User.findByIdAndDelete(req.params.user_id);
-        res.json({
+        return res.json({
             ok: true,
-            message: 'User eliminaded'
+            message: 'User eliminated'
         })
 
     } catch (err){
+
         console.log(err);
-        res.status(500).json({
+        return res.status(500).json({
             ok: false,
             message: 'Error to delete user'
-        })
-    }
-}
+        });
+    };
+};
 
 module.exports = {
     getUsers,

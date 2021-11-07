@@ -23,8 +23,10 @@ const port = env.PORT;
 //routes
 const api_route = "/api-hospital";
 const user_route = "/users";
+const hospital_route = "/hospitals";
 app.use(api_route + user_route, require('./routes/users'));
 app.use(api_route + user_route, require('./routes/auth'));
+app.use(api_route + hospital_route, require('./routes/hospital'))
 
 app.get(
     "/",

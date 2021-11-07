@@ -16,14 +16,13 @@ router.get('/get-user/:user_id', validateJWT, getUser);
 router.post(
     '/new-user', 
     [
-        validateJWT,
         //validamos que estos campos cumplan con los parametros establecidos y en caso de no este envía un error a la request
         check('name', 'Name is empty').not().isEmpty(),
         check('password', 'Password is empty').not().isEmpty(),
         check('email', 'Nota validate email').isEmail(),
         validateAttribute
-    ]
-    , createUser
+    ], 
+    createUser
 );
 
 //UPDATE
